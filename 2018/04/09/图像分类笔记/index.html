@@ -27,7 +27,7 @@
 <meta property="og:description" content="图像分类笔记原文链接地址：https://blog.csdn.net/nnnnnnnnnnnny/article/details/54577123">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://i.imgur.com/VhypTsV.jpg">
-<meta property="og:updated_time" content="2018-04-12T07:01:03.021Z">
+<meta property="og:updated_time" content="2018-04-16T08:00:42.827Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图像分类笔记 *KNN分类器*">
 <meta name="twitter:description" content="图像分类笔记原文链接地址：https://blog.csdn.net/nnnnnnnnnnnny/article/details/54577123">
@@ -173,7 +173,7 @@ var themeMenus = {};
 <div class="article-gallery">
   <div class="article-gallery-photos">
     
-      <a class="article-gallery-img fancybox" href="https://i.imgur.com/VhypTsV.jpg" rel="gallery_cjg1xripk0000ekxy5vmqvd8a">
+      <a class="article-gallery-img fancybox" href="https://i.imgur.com/VhypTsV.jpg" rel="gallery_cjg1yarp10000n4xyfrsah0rj">
         <img src="https://i.imgur.com/VhypTsV.jpg" itemprop="image">
       </a>
     
@@ -227,6 +227,13 @@ var themeMenus = {};
 <p>好在我们有不用测试集调优的方法。其思路是：从训练集中取出一部分数据用来调优，我们称之为<strong>验证集（validation set）</strong>。以CIFAR-10为例，我们可以用49000个图像作为训练集，用1000个图像作为验证集。验证集其实就是作为假的测试集来调优。</p>
 <p>程序结束后，我们会作图分析出哪个k值表现最好，然后用这个k值来跑真正的测试集，并作出对算法的评价。</p>
 <p><strong>把训练集分成训练集和验证集。使用验证集来对所有超参数调优。最后只在测试集上跑一次并报告结果。</strong></p>
+<h2 id="超参数调优注意问题"><a href="#超参数调优注意问题" class="headerlink" title="超参数调优注意问题"></a>超参数调优注意问题</h2><p><div align="center"><img src="https://i.imgur.com/uA2tX9C.png" alt=""><div align="left"></div></div></p>
+<p><strong>1.选择能对你训练集给出最高准确率，表现最佳的超参数</strong><br>&emsp;&emsp;<strong>千万不要这么做</strong><br>&emsp;&emsp;例如在之前的k-最近邻分类算法中，假设k=1我们总能完美分类训练集数据，所以如果我们采用这一策略，总是选择k=1，但是正如之前案例所见的，在实践中，让k取更大的值会在训练集中分错个别数据，但是对于在训练集中，未出现过的数据分类性能更佳。<br>&emsp;&emsp;我们关心的不是要尽可能拟合训练集，而是要让我们的分类器，我们的方法在训练集以外的未知数据上表现更好。 </p>
+<p><strong>2.把所有的数据分成两部分，一部分是训练集，一部分是测试集，然后在训练集上用不同的超参数来训练算法，然后将训练好的分类器，用在测试集上，再选择一组在测试集上表现最好的超参数。</strong><br>&emsp;&emsp;<strong>错误做法</strong><br>&emsp;&emsp;因为同样的机器学习系统的目的，是让我们了解算法表现究竟如何，所以测试集的目的是给了我们一种预估的方法，即在没有遇到的数据上算法表现将会如何，如果采用这种用不同的超参数，训练不同算法的策略，然后选择在测试集上表现最好的超参数，那么很可能我们选择了，一组超参数，只是让我们的算法在这组测试集上表现良好，但是这组测试集的表现无法代表在全新的未见过的数据上的表现。 </p>
+<p><strong>3.更常见的做法就是将数据，分为不同的三组，大部分数据作为训练集（train set），然后建立一个验证集（validation set），一个测试集（test set），我们通常所做的就是，在训练集上用不同的超参数来训练算法，在验证集上进行评估，然后用一组超参数，选择在验证集上表现最好的，然后当完成了这些步骤以后，你也完成了所有的调试，所有都完成了，然后把这组在验证集上表现最佳的分类器拿出来，在测试集上跑一跑，这才是你写到论文中的数据，也是你要写到报告中的数据，这个数据才告诉你，你的算法在未见的新数据上表现如何，非常非常重要的一点就是，必须分割验证集和测试集，要保证测试集收到严格的控制。</strong>   </p>
+<p><strong>4.超参数的另一个方法就是交叉验证，这个在小数据集中更常用一些，在深度学习中不那么常用。因为：在深度学习中，当我们训练大型模型时，训练本身非常消耗计算能力，因此这些方法实际不常用。</strong> </p>
+<p><strong>5.训练集和验证集的区别：</strong><br>&emsp;&emsp;如果你想一想k-最近邻分类算法（KNN），那么训练集就是一堆贴上标签的图片，我们记下标签，要给图像分类，我们会将图片与训练集的每一个元素比较，然后将与训练点最接近点的标签作为结果，我们的算法会记住训练集中的所有样本，然后我们会把验证集中的每个元素与训练集中的每个元素比较，将它为依据判定分类器的准确率，在验证集上表现如何，这就是验证集和训练集的区别，你的算法可以看到训练集中的各个标签，但是在验证集中，你的算法不能直接看到他们的标签，我们只是用验证集中的标签，来检查我们算法的表现。  </p>
+<p><strong>6.关于测试集能不能很好地代表真实世界中的数据？</strong><br>&emsp;&emsp;我们背后的统计学假设就是，你的数据都互相独立，服从同一分布，这样你数据上所有的点都来自同一个概率分布，当然在现实中不可能总是这样的情况，你可能碰到一些其他的情况，也就是你的测试集代表性，不佳，不能很好地反映真实世界。这一问题就是数据集的创建者和数据集管理者需要好好思考的。</p>
 <h2 id="交叉验证："><a href="#交叉验证：" class="headerlink" title="交叉验证："></a>交叉验证：</h2><p>&emsp;&emsp;有时候，训练集数量较小（因此验证集的数量更小），人们会使用一种被称为交叉验证的方法，这种方法更加复杂些。还是用刚才的例子，如果是交叉验证集，我们就不是取1000个图像，而是将训练集平均分成5份，其中4份用来训练，1份用来验证。然后我们循环着取其中4份来训练，其中1份来验证，最后取所有5次验证结果的平均值作为算法验证结果。</p>
 <p><strong>实际应用。在实际情况下，人们不是很喜欢用交叉验证，主要是因为它会耗费较多的计算资源。一般直接把训练集按照50%-90%的比例分成训练集和验证集。但这也是根据具体情况来定的：如果超参数数量多，你可能就想用更大的验证集，而验证集的数量不够，那么最好还是用交叉验证吧。至于分成几份比较好，一般都是分成3、5和10份。</strong></p>
 <p><div align="center"><img src="https://i.imgur.com/6sXrGbH.jpg" alt=""> <div align="left"> </div></div></p>
@@ -300,7 +307,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图像分类笔记"><span class="nav-number">1.</span> <span class="nav-text">图像分类笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据驱动方法："><span class="nav-number">1.1.</span> <span class="nav-text">数据驱动方法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像分类流程："><span class="nav-number">1.2.</span> <span class="nav-text">图像分类流程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nearest-Neighbor分类器"><span class="nav-number">1.3.</span> <span class="nav-text">Nearest Neighbor分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k-Nearest-Neighbor分类器"><span class="nav-number">1.4.</span> <span class="nav-text">k-Nearest Neighbor分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用于超参数调优的验证集"><span class="nav-number">1.5.</span> <span class="nav-text">用于超参数调优的验证集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉验证："><span class="nav-number">1.6.</span> <span class="nav-text">交叉验证：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nearest-Neighbor分类器的优劣"><span class="nav-number">1.7.</span> <span class="nav-text">Nearest Neighbor分类器的优劣</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结：实际应用k-NN"><span class="nav-number">2.</span> <span class="nav-text">小结：实际应用k-NN</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图像分类笔记"><span class="nav-number">1.</span> <span class="nav-text">图像分类笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据驱动方法："><span class="nav-number">1.1.</span> <span class="nav-text">数据驱动方法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像分类流程："><span class="nav-number">1.2.</span> <span class="nav-text">图像分类流程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nearest-Neighbor分类器"><span class="nav-number">1.3.</span> <span class="nav-text">Nearest Neighbor分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k-Nearest-Neighbor分类器"><span class="nav-number">1.4.</span> <span class="nav-text">k-Nearest Neighbor分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用于超参数调优的验证集"><span class="nav-number">1.5.</span> <span class="nav-text">用于超参数调优的验证集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#超参数调优注意问题"><span class="nav-number">1.6.</span> <span class="nav-text">超参数调优注意问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉验证："><span class="nav-number">1.7.</span> <span class="nav-text">交叉验证：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nearest-Neighbor分类器的优劣"><span class="nav-number">1.8.</span> <span class="nav-text">Nearest Neighbor分类器的优劣</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结：实际应用k-NN"><span class="nav-number">2.</span> <span class="nav-text">小结：实际应用k-NN</span></a></li></ol>
     
     </div>
   </aside>
