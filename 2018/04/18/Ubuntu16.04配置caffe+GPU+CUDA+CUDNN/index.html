@@ -27,7 +27,7 @@
 <meta property="og:description" content="Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnncaffe第二次安装配置，以前仅配置的是CPU所以不用安装cuda+cudnn，现在配置GPU版本的，踩的坑比较多，同时由于被其他事打扰，所以无法专心配置，现在特地写一博客，解决配置过程以及踩过的坑如何解决！！！！">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://i.imgur.com/7uVOc01.jpg">
-<meta property="og:updated_time" content="2018-04-18T05:21:33.112Z">
+<meta property="og:updated_time" content="2018-04-18T12:06:43.871Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu16.04 caffe配置 GPU">
 <meta name="twitter:description" content="Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnncaffe第二次安装配置，以前仅配置的是CPU所以不用安装cuda+cudnn，现在配置GPU版本的，踩的坑比较多，同时由于被其他事打扰，所以无法专心配置，现在特地写一博客，解决配置过程以及踩过的坑如何解决！！！！">
@@ -301,8 +301,16 @@ cd build
 3 sudo cp /usr/local/cuda-8.0/lib64/libcurand.so.8.0 /usr/local/lib/libcurand.so.8.0 &amp;&amp; sudo ldconfig
 4 sudo cp /usr/local/cuda-8.0/lib64/libcudnn.so.5 /usr/local/lib/libcudnn.so.5 &amp;&amp; sudo ldconfig
 </code></pre><p>（8）测试</p>
-<pre><code>sudo make runtest
-</code></pre>
+<pre><code>make test
+make runtest
+</code></pre><p>如果运行之后出现下图，说明caffe配置成功。</p>
+<p><div align="center"><img src="https://i.imgur.com/8UHrKlr.png" alt=""><div align="left"><br>到此caffe配置完毕！  </div></div></p>
+<h2 id="MNIST数据集测试"><a href="#MNIST数据集测试" class="headerlink" title="MNIST数据集测试"></a>MNIST数据集测试</h2><p>配置caffe完成后，我们可以利用MNIST数据集对caffe进行测试，过程如下：<br><strong>1.将终端定位到Caffe根目录</strong><br>cd ~/caffe  </p>
+<p><strong>2.下载MNIST数据库并解压缩</strong><br>./data/mnist/get_mnist.sh</p>
+<p><strong>3.将其转换成Lmdb数据库格式</strong><br>./examples/mnist/create_mnist.sh</p>
+<p><strong>4.训练网络</strong><br>./examples/mnist/train_lenet.sh<br>训练的时候可以看到损失与精度数值，如下图：</p>
+<p><div align="center"><img src="https://i.imgur.com/laVqx8Q.png" alt=""><div align="left"></div></div></p>
+<h2 id="结束：问题补充"><a href="#结束：问题补充" class="headerlink" title="结束：问题补充"></a>结束：问题补充</h2>
       
     </div>
     <footer class="entry-meta entry-footer">
@@ -371,7 +379,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu16-04-安装配置Caffe-GPU-cuda-Cudnn"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装相关依赖项"><span class="nav-number">1.1.</span> <span class="nav-text">安装相关依赖项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装NVIDA驱动"><span class="nav-number">1.2.</span> <span class="nav-text">安装NVIDA驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装CUDA"><span class="nav-number">1.3.</span> <span class="nav-text">安装CUDA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置cuDNN"><span class="nav-number">1.4.</span> <span class="nav-text">配置cuDNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装opencv-3-1"><span class="nav-number">1.5.</span> <span class="nav-text">安装opencv 3.1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置caffe"><span class="nav-number">1.6.</span> <span class="nav-text">配置caffe</span></a></li></ol></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu16-04-安装配置Caffe-GPU-cuda-Cudnn"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装相关依赖项"><span class="nav-number">1.1.</span> <span class="nav-text">安装相关依赖项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装NVIDA驱动"><span class="nav-number">1.2.</span> <span class="nav-text">安装NVIDA驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装CUDA"><span class="nav-number">1.3.</span> <span class="nav-text">安装CUDA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置cuDNN"><span class="nav-number">1.4.</span> <span class="nav-text">配置cuDNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装opencv-3-1"><span class="nav-number">1.5.</span> <span class="nav-text">安装opencv 3.1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置caffe"><span class="nav-number">1.6.</span> <span class="nav-text">配置caffe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MNIST数据集测试"><span class="nav-number">1.7.</span> <span class="nav-text">MNIST数据集测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束：问题补充"><span class="nav-number">1.8.</span> <span class="nav-text">结束：问题补充</span></a></li></ol></li></ol>
     
     </div>
   </aside>
