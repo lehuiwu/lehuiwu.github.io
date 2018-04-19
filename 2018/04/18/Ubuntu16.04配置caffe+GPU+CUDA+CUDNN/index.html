@@ -277,7 +277,28 @@ make runtest
 <p><strong>3.将其转换成Lmdb数据库格式</strong><br>./examples/mnist/create_mnist.sh</p>
 <p><strong>4.训练网络</strong><br>./examples/mnist/train_lenet.sh<br>训练的时候可以看到损失与精度数值，如下图：</p>
 <p><div align="center"><img src="https://i.imgur.com/laVqx8Q.png" alt=""><div align="left"></div></div></p>
-<h2 id="结束：问题补充"><a href="#结束：问题补充" class="headerlink" title="结束：问题补充"></a>结束：问题补充</h2>
+<h2 id="结束：问题补充"><a href="#结束：问题补充" class="headerlink" title="结束：问题补充"></a>结束：问题补充</h2><h3 id="编译caffe的matlab接口"><a href="#编译caffe的matlab接口" class="headerlink" title="编译caffe的matlab接口"></a>编译caffe的matlab接口</h3><p>（1）修改caffe-master/Makefile.config<br>&emsp;&emsp;这一步主要是在Caffe的编译配置文件Makefile.config中加入Matlab的路径。注意路径文件夹是要包含Matlab安装目录的“bin”文件夹的。  </p>
+<p><div align="center"><img src="https://i.imgur.com/nPewFF3.png" alt=""><div align="left"><br>（2）编译接口。这里默认已经编译好了Caffe源码主体部分。所以直接编译接口。在caffe-master目录下打开终端，输入：  make matcaffe   至于如何编译Caffe源码的主体部分请大家百度，就是make all ,make test那些。我是一开始没有在Makefile.config中加入Matlab路径，所以编译Caffe主体代码时不会编译Matlab接口。<br>（3）测试接口。输入 make mattest<br>&emsp;&emsp;这里可能报错：caffe_.mexa64: undefined symbol: _ZN2cv8imencodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_11_InputArrayERSt6vectorIhSaIhEERKSB_IiSaIiEE  </div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/GSwrPr2.png" alt=""><div align="left"><br>PS：只替换库libstdc++.so.6是不行的，要解决此问题需要多替换几个库。输入终端命令：  </div></div></p>
+<pre><code>1 export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libopencv_highgui.so.2.4:/usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.2.4:/usr/lib/x86_64-linux-gnu/libopencv_core.so.2.4:/usr/lib/x86_64-linux-gnu/libstdc++.so.6:/usr/lib/x86_64-linux-gnu/libfreetype.so.6
+2 export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/
+</code></pre><p><strong>注意：目录/usr/lib/x86_64-linux-gnu/是我的系统库目录。大家可以通过查询库所在位置来确定自己的系统库目录：</strong><br>    <code>sudo find / -name  libstdc++.so.6</code><br>重新运行make mattest ， 问题解决～  </p>
+<p><div align="center"><img src="https://i.imgur.com/wb2hY1G.png" alt=""><div align="left"></div></div></p>
+<p><strong>下面是我另外碰到的一些问题：</strong><br>① MEX-file ‘/home/zhangjiqing/caffe/matlab/+caffe/private/caffe_.meax64’无效：/home/zhangjiqing/caffe/matlab/+caffe/private/caffe_.mexa64:undefined symbol:_ZN2cv8imencodeERKNSt7_cxx1112basic_stringSt11char_traitslcESalcEEERKNS_1alhEERKSB_liSaliEE<br>解决方法如下：</p>
+<p><div align="center"><img src="https://i.imgur.com/zRsQyxz.png" alt=""><div align="left"></div></div></p>
+<p>②运行<code>make mattest</code>时可能会碰到下面这个错误：<br>MEX-file ‘/home/a204/caffe/matlab/+caffe/private/caffe_.meax64’无效：/usr/local/MATLAB/R2015b/bin/glnxa64/../../sys/os/glnxa64/libstdc++.so.6:version <code>GLIBCXX_3.4.20</code>not found(required by /home/a204/caffe/matlab/+caffe/private/caffe_.mexa64)解决方式是将matlab的libstdc++.so.6链接到系统的库文件。</p>
+<pre><code>sudo rm /usr/local/MATLAB/R2015b/sys/os/glnxa64/libstdc++.so.6
+sudo ln -s /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/local/MATLAB/R2015b/sys/os/glnxa64/libstdc++.so.6
+</code></pre><p><strong>这样可以解决，不过主要在使用<code>rm</code>命令式需要谨慎，先备份。</strong></p>
+<p>（4）在Matlab中试试接口  </p>
+<p><1>下载bvlc_reference_caffenet.caffemodel<br>链接：<code>http://dl.caffe.berkeleyvision.org/bvlc_reference_caffenet.caffemodel</code>  </1></p>
+<p>下载好之后放入文件夹<code>/caffe-master/models/bvlc_reference_caffenet</code> 这是因为一会运行的demo要使用这个模型。  </p>
+<p><2>在终端输入命令“matlab”(打不开的自己去添加PATH)打开Matlab，切换到目录/caffe-master/matlab/demo/（这很重要）  </2></p>
+<p><3>输入命令 run(‘classification_demo.m’) 或者双击打开classification_demo.m直接点击上面控制台上的“运行”即可，不需要输入参数。  </3></p>
+<p><4>输出是一个1000×1的矩阵，因为ImageNet数据集有1000个类别。</4></p>
+<p><div align="center"><img src="https://i.imgur.com/1E8l7sx.png" alt=""><div align="left"></div></div></p>
+<p><strong>到此OK，大家加油～</strong></p>
+
     </div>
 
     <div class="post-footer">
