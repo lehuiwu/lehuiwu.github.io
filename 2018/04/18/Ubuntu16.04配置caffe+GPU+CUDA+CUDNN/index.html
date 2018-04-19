@@ -1,213 +1,182 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Be kind,Be useful">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
 
-  <!-- PACE Progress Bar START -->
-  
-    <script src="/js/pace.min.js"></script>
-    <link rel="stylesheet" href="https://github.com/HubSpot/pace/raw/master/themes/orange/pace-theme-flash.css">
-  
-  
 
-  <!-- PACE Progress Bar START -->
 
-  
-  <title>ubuntu16.04 caffe配置 gpu | Be kind,Be useful</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-  
-  
-  
-  <meta name="description" content="Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnncaffe第二次安装配置，以前仅配置的是CPU所以不用安装cuda+cudnn，现在配置GPU版本的，踩的坑比较多，同时由于被其他事打扰，所以无法专心配置，现在特地写一博客，解决配置过程以及踩过的坑如何解决！！！！">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Ubuntu16.04 caffe配置 GPU">
-<meta property="og:url" content="http://yoursite.com/2018/04/18/Ubuntu16.04配置caffe+GPU+CUDA+CUDNN/index.html">
-<meta property="og:site_name" content="Be kind,Be useful">
-<meta property="og:description" content="Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnncaffe第二次安装配置，以前仅配置的是CPU所以不用安装cuda+cudnn，现在配置GPU版本的，踩的坑比较多，同时由于被其他事打扰，所以无法专心配置，现在特地写一博客，解决配置过程以及踩过的坑如何解决！！！！">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://i.imgur.com/7uVOc01.jpg">
-<meta property="og:updated_time" content="2018-04-18T12:06:43.871Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ubuntu16.04 caffe配置 GPU">
-<meta name="twitter:description" content="Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnncaffe第二次安装配置，以前仅配置的是CPU所以不用安装cuda+cudnn，现在配置GPU版本的，踩的坑比较多，同时由于被其他事打扰，所以无法专心配置，现在特地写一博客，解决配置过程以及踩过的坑如何解决！！！！">
-<meta name="twitter:image" content="https://i.imgur.com/7uVOc01.jpg">
-  
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>Ubuntu16.04 caffe配置 GPU | Be kind,Be useful</title>
+
+
     <link rel="alternate" href="/atom.xml" title="Be kind,Be useful" type="application/atom+xml">
-  
-  <link rel="icon" href="/css/images/favicon.ico">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+
+
+    <link rel="icon" href="/favicon.ico">
+
     
-  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
-  <link rel="stylesheet" href="/css/style.css">
 
-  <script src="/js/jquery-3.1.1.min.js"></script>
 
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
-  <link rel="stylesheet" href="/css/hiero.css" >
-  <link rel="stylesheet" href="/css/glyphs.css" >
-  
-    <link rel="stylesheet" href="/css/vdonate.css" >
-  
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="/css/my.css">
-  <!-- Google Adsense -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-0123456789ABCDEF",
-          enable_page_level_ads: true
-      });
-  </script>
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
 </head>
 
-<script>
-var themeMenus = {};
 
-  themeMenus["/"] = "首页"; 
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
 
-  themeMenus["/archives"] = "归档"; 
-
-  themeMenus["/categories"] = "分类"; 
-
-  themeMenus["/tags"] = "标签"; 
-
-  themeMenus["/about"] = "关于"; 
-
-</script>
-
-
-  <body data-spy="scroll" data-target="#toc" data-offset="50">
-
-
-  <header id="allheader" class="site-header" role="banner">
-  <div class="clearfix container">
-      <div class="site-branding">
-
-          <h1 class="site-title">
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='PreCon'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
             
-              <a href="/" rel="home" >
-                <img style="margin-bottom: 10px;"  width="124px" height="124px" alt="Hike News" src=" /css/images/lehui.JPG">
-              </a>
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
             
-          </h1>
-
-          
-            
-          <nav id="main-navigation" class="main-navigation" role="navigation">
-            <a class="nav-open">Menu</a>
-            <a class="nav-close">Close</a>
-            <div class="clearfix sf-menu">
-
-              <ul id="main-nav" class="nmenu sf-js-enabled">
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
-                    
-              </ul>
-            </div>
-          </nav>
-
-
-      </div>
-  </div>
+    	</div>
+    </div>
 </header>
-
-
-  <div id="originBgDiv" style="background: #fff; width: 100%;">
-
-      <div style="max-height:600px; overflow: hidden;  display: flex; display: -webkit-flex; align-items: center;">
-        <img id="originBg" width="100%" alt="" src="">
-      </div>
-
-  </div>
-
-  <script>
-  function setAboutIMG(){
-      var imgUrls = "css/images/pose.jpg,https://source.unsplash.com/collection/954550/1920x1080".split(",");
-      var random = Math.floor((Math.random() * imgUrls.length ));
-      if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
-        document.getElementById("originBg").src=imgUrls[random];
-      } else {
-        document.getElementById("originBg").src='/' + imgUrls[random];
-      }
-  }
-  bgDiv=document.getElementById("originBgDiv");
-  if(location.pathname.match('about')){
-    setAboutIMG();
-    bgDiv.style.display='block';
-  }else{
-    bgDiv.style.display='none';
-  }
-  </script>
-
-
-
-  <div id="container">
-    <div id="wrap">
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa "></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/资源/"><i class="fa "></i>资源</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Ubuntu16.04 caffe配置 GPU">
             
-      <div id="content" class="outer">
+	            Ubuntu16.04 caffe配置 GPU
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+            
+        </span>
+    </span>
+    
+
+    
         
-          <section id="main" style="float:none;"><article id="post-Ubuntu16.04配置caffe+GPU+CUDA+CUDNN" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/04/18</span>
+        </span>
     
-<div class="article-gallery">
-  <div class="article-gallery-photos">
-    
-      <a class="article-gallery-img fancybox" href="https://i.imgur.com/7uVOc01.jpg" rel="gallery_cjg4n0d600000y0xyotv10aad">
-        <img src="https://i.imgur.com/7uVOc01.jpg" itemprop="image">
-      </a>
-    
-  </div>
 </div>
 
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" class="article-title" itemprop="name">
-      Ubuntu16.04 caffe配置 GPU
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2018/04/18/Ubuntu16.04配置caffe+GPU+CUDA+CUDNN/" class="article-date">
-	  <time datetime="2018-04-18T05:08:40.654Z" itemprop="datePublished">四月 18, 2018</time>
-	</a>
-
-      
-	<span id="busuanzi_container_page_pv">
-	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-	</span>
-
+            
+            
     </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Ubuntu16-04-安装配置Caffe-GPU-cuda-Cudnn"><a href="#Ubuntu16-04-安装配置Caffe-GPU-cuda-Cudnn" class="headerlink" title="Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnn"></a>Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnn</h1><p>caffe第二次安装配置，以前仅配置的是CPU所以不用安装cuda+cudnn，现在配置GPU版本的，踩的坑比较多，同时由于被其他事打扰，所以无法专心配置，现在特地写一博客，解决配置过程以及踩过的坑如何解决！！！！<br><a id="more"></a><br>&emsp;&emsp; <strong>caffe配置</strong>  </p>
-<p><div align="center"><strong>Ubuntu16.04+GPU+cuda8.0+cudnn5.1</strong><div align="left"></div></div></p>
-<p><strong>安装过程</strong></p>
+    
+    <div id="post-gallery">
+        
+          <img src="https://i.imgur.com/7uVOc01.jpg" alt="gallery-img" class="gallery">
+        
+    </div>
+
+    <div class="post-body post-content">
+        <h1 id="Ubuntu16-04-安装配置Caffe-GPU-cuda-Cudnn"><a href="#Ubuntu16-04-安装配置Caffe-GPU-cuda-Cudnn" class="headerlink" title="Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnn"></a>Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnn</h1><p>caffe第二次安装配置，以前仅配置的是CPU所以不用安装cuda+cudnn，现在配置GPU版本的，踩的坑比较多，同时由于被其他事打扰，所以无法专心配置，现在特地写一博客，解决配置过程以及踩过的坑如何解决！！！！<br><a id="more"></a><br><strong>caffe配置：  Ubuntu16.04+GPU+cuda8.0+cudnn5.1</strong><br><strong>安装过程</strong></p>
 <h2 id="安装相关依赖项"><a href="#安装相关依赖项" class="headerlink" title="安装相关依赖项"></a>安装相关依赖项</h2><pre><code>sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler
 sudo apt-get install --no-install-recommends libboost-all-dev
 sudo apt-get install libopenblas-dev liblapack-dev libatlas-base-dev
@@ -231,7 +200,7 @@ export LD_LIBRARY_PATH=/usr/local/cuda8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_
 </code></pre><p>如果显示一些关于GPU的信息，则说明安装成功。  </p>
 <p><div align="center"><img src="https://i.imgur.com/bnOuJvJ.png" alt=""><div align="left"></div></div></p>
 <h2 id="配置cuDNN"><a href="#配置cuDNN" class="headerlink" title="配置cuDNN"></a>配置cuDNN</h2><p>cuDNN是GPU加速计算深层神经网络的库。<br>首先去官网<code>https://developer.nvidia.com/rdp/cudnn-download</code>下载cuDNN，需要注册一个账号才能下载。下载版本号如下图：  </p>
-<p><div align="center"><img src="https://i.imgur.com/6MwacDL.png" alt=""><div align="left"><br>下载cuDNN5.1之后进行解压：（对应自己下载的版本）<br>&emsp;&emsp;<code>sudo tar -zxvf ./cudnn-8.0-linux-x64-v5.1.tgz</code><br>进入cuDNN5.1解压之后的include目录,在命令行进行如下操作：  </div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/6MwacDL.png" alt=""><div align="left"><br>下载cuDNN5.1之后进行解压：（对应自己下载的版本）<br><code>sudo tar -zxvf ./cudnn-8.0-linux-x64-v5.1.tgz</code><br>进入cuDNN5.1解压之后的include目录,在命令行进行如下操作：  </div></div></p>
 <pre><code>cd cuda /include
 sudo cp cudnn.h /usr/local/cuda/include  #复制头文件
 </code></pre><p>再将进入lib64目录下的动态文件进行复制和链接：  </p>
@@ -242,7 +211,7 @@ cd /usr/local/cuda/lib64/
 sudo rm -rf libcudnn.so libcudnn.so.5    #删除原有动态文件
 sudo ln -s libcudnn.so.5.0.5 libcudnn.so.5  #生成软衔接
 sudo ln -s libcudnn.so.5 libcudnn.so      #生成软链接
-</code></pre><p>&emsp;&emsp;<strong>画重点</strong><br>此处<code>sudo ln -s libcudnn.so.5.0.5 libcudnn.so.5</code>中的<code>libcudnn.so.5.0.5</code>文件需要与你电脑中<code>/usr/local/cuda/lib64/</code>文件夹中的对应，如果不对应就会在编译caffe时make all 报如下错误：（原因是cudnn链接没有弄好）</p>
+</code></pre><p><strong>画重点</strong><br>此处<code>sudo ln -s libcudnn.so.5.0.5 libcudnn.so.5</code>中的<code>libcudnn.so.5.0.5</code>文件需要与你电脑中<code>/usr/local/cuda/lib64/</code>文件夹中的对应，如果不对应就会在编译caffe时make all 报如下错误：（原因是cudnn链接没有弄好）</p>
 <p><div align="center"><img src="https://i.imgur.com/9VbpthC.png" alt=""><div align="left"><br>错误如：  </div></div></p>
 <pre><code>LD -O .build_release/lib/libcaffe.so.1.0.0
 /usr/bin/ld:找不到 -lcudnn
@@ -311,190 +280,194 @@ make runtest
 <p><strong>4.训练网络</strong><br>./examples/mnist/train_lenet.sh<br>训练的时候可以看到损失与精度数值，如下图：</p>
 <p><div align="center"><img src="https://i.imgur.com/laVqx8Q.png" alt=""><div align="left"></div></div></p>
 <h2 id="结束：问题补充"><a href="#结束：问题补充" class="headerlink" title="结束：问题补充"></a>结束：问题补充</h2>
-      
     </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-      
-        <div id="donation_div"></div>
 
-<script src="/js/vdonate.js"></script>
-<script>
-var a = new Donate({
-  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
-  btnText: '打赏支持', // 可选参数，打赏按钮文字
-  el: document.getElementById('donation_div'),
-  wechatImage: 'https://raw.githubusercontent.com/iTimeTraveler/iTimeTraveler.github.io/site/source/about/donate/images/WeChanQR.png',
-  alipayImage: ''
-});
-</script>
-      
+    <div class="post-footer">
+        <div>
             
-      
-        
-	<div id="comment">
-		<!-- 来必力City版安装代码 -->
-		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
-		<script type="text/javascript">
-		   (function(d, s) {
-		       var j, e = d.getElementsByTagName(s)[0];
-
-		       if (typeof LivereTower === 'function') { return; }
-
-		       j = d.createElement(s);
-		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-		       j.async = true;
-
-		       e.parentNode.insertBefore(j, e);
-		   })(document, 'script');
-		</script>
-		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-		</div>
-		<!-- City版安装代码已完成 -->
-	</div>
-
-
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-  
-    <a href="/2018/04/09/图像分类笔记/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">图像分类笔记 *KNN分类器*</div>
-    </a>
-  
-</nav>
-
-  
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
 </article>
 
-<!-- Table of Contents -->
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2018/04/09/图像分类笔记/" class="next-post btn btn-default" title='图像分类笔记 *KNN分类器*'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">图像分类笔记 *KNN分类器*</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
 
-  <aside id="sidebar">
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    
-      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu16-04-安装配置Caffe-GPU-cuda-Cudnn"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu16.04 安装配置Caffe GPU+cuda+Cudnn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装相关依赖项"><span class="nav-number">1.1.</span> <span class="nav-text">安装相关依赖项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装NVIDA驱动"><span class="nav-number">1.2.</span> <span class="nav-text">安装NVIDA驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装CUDA"><span class="nav-number">1.3.</span> <span class="nav-text">安装CUDA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置cuDNN"><span class="nav-number">1.4.</span> <span class="nav-text">配置cuDNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装opencv-3-1"><span class="nav-number">1.5.</span> <span class="nav-text">安装opencv 3.1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置caffe"><span class="nav-number">1.6.</span> <span class="nav-text">配置caffe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MNIST数据集测试"><span class="nav-number">1.7.</span> <span class="nav-text">MNIST数据集测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束：问题补充"><span class="nav-number">1.8.</span> <span class="nav-text">结束：问题补充</span></a></li></ol></li></ol>
-    
-    </div>
-  </aside>
-</section>
+
+    <div id="comments">
         
-      </div>
-      <footer id="footer" class="site-footer">
-  
+	<!--PC和WAP自适应版-->
+<div id="SOHUCS"></div>
+<script type="text/javascript">
+	(function(){var appid='cyt8KmUC1';var conf='prod_855a68d3b3d91855360a6215672a505a';var width=window.innerWidth||document.documentElement.clientWidth;if(width<960){window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id='+appid+'&conf='+conf+'"><\/script>');}else{var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}
+	c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})});}})();
+</script>	
 
-  <div class="clearfix container">
-      <div class="site-info">
-	      &copy; 2018 Be kind,Be useful All Rights Reserved.
-          
-            <span id="busuanzi_container_site_uv">
-              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
-              本站总访问量<span id="busuanzi_value_site_pv"></span>次
-            </span>
-          
-      </div>
-      <div class="site-credit">
-        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
-      </div>
-  </div>
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>主题Snippet v1.2.0版本已经上线！欢迎更新~ <br/>
+主题下载：<a href="https://github.com/shenliyang/hexo-theme-snippet" title="fork me" target="_blank">Snippet主题</a> <br/>
+<hr/>接受贡献，包括不限于提交问题与需求，修复代码。欢迎Pull Request<br/>支持主题：<a href="https://github.com/shenliyang/hexo-theme-snippet/stargazers">Star一下</a>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/shenliyang" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:snippet@91h5.cc" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.shenliyang.com" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
 </footer>
 
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
 
-<!-- min height -->
 
-<script>
-    var contentdiv = document.getElementById("content");
 
-    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
-</script>
 
-<!-- Custome JS -->
-<script src="/js/my.js"></script>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
     </div>
-    <!-- <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
-</nav> -->
-    
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/scripts.js"></script>
-<script src="/js/bootstrap.js"></script>
-<script src="/js/main.js"></script>
+</div>
 
 
 
+	<script src="/js/search.js?rev=@@hash"></script>
 
 
+<script src="/js/app.js?rev=@@hash"></script>
 
 
-  <div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
-
-
-
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-
-
-
-
-
-
-  </div>
-
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js" async=""></script>
 </body>
 </html>
