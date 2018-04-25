@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>标签: Deep Learning | Be kind,Be useful</title>
+<title>Linear Classification | Be kind,Be useful</title>
 
 
     <link rel="alternate" href="/atom.xml" title="Be kind,Be useful" type="application/atom+xml">
@@ -37,6 +37,8 @@
 
     
 
+
+    <link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
 
 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
@@ -126,43 +128,115 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <h3> 
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Linear Classification">
+            
+	            Linear Classification
+            
+        </h1>
+        <div class="post-meta">
     
-        Deep Learning 
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/深度学习">
+            深度学习
+        </a>
+    </span>
     
     
-</h3>
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/cs231n" title='cs231n'>
+                        cs231n
+                    </a>
+                
+            
+        </span>
+    </span>
+    
 
-    <article class="post">
+    
         
-            <div class="post-media">
-                <a href="/2018/04/09/图像分类笔记/">
-                    <img class="img-ajax" src="/img/loading.gif"  data-src="https://i.imgur.com/YleasaF.jpg"  alt="图像分类笔记 *KNN分类器*"> 
-                </a>
-            </div>
-        
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title"> 
-                    <a href="/2018/04/09/图像分类笔记/">图像分类笔记 *KNN分类器*</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2018年04月09日
-                    </time>
-                </div>
-            </div>
-            <p class="brief">
-                
-                    图像分类笔记  本内容为学习斯坦福课程CS231n的课后笔记记录…
-                
-            </p> 
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/04/25</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p><strong>斯坦福cs231n课程笔记 <em>线性分类器</em></strong>  </p>
+<p><strong>线性分类可以解释为：</strong><br>&emsp;&emsp;每个种类的学习模板，看左下角的图，对图里的每个像素以及10个分类离得每一项，矩阵W里都有一些对应的项，告诉我们那个像素对那个分类有多少的影响，也就是说矩阵W里的每一行，都对应一个分类模板，如果我们解开这些行的值（成图片的大小），那么每一行又分别对应一些权重，每个图像像素值和对应的那个类别的一些权重，将这行分解回图像的大小，我们就可以可视化学到每个类的模板。<br>&emsp;&emsp;对于线性分类器的另一种解释是：学习像素在高维空间的一个线性决策边界，其中高维空间就对应了图片能娶到的像素密度值。  </p>
+<p><div align="center"><img src="https://i.imgur.com/KghACsR.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/I5BvkY2.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/JojcF8t.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/NFJOgEi.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/F3oN8BT.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/xjUr9ID.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/7H0ZrQq.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/spaxT0a.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/Rhjew7X.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/LCE2YVf.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/FaqadLn.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/KSeRcLH.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/QwMPsp4.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/6pu1rpx.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/mzb9C3o.png" alt=""><div align="left"></div></div></p>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
         </div>
-    </article>
- 
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2018/04/23/Ubuntu16.04编译caffe matlab接口/" class="next-post btn btn-default" title='Ubuntu16.04 caffe配置 matlab接口'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Ubuntu16.04 caffe配置 matlab接口</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
 
 
+    <div id="comments">
+        
+	<script type="text/javascript" src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: window.location.pathname,
+        owner:"",
+        repo:"",
+        oauth: {
+          client_id:"",
+          client_secret:""
+        },
+        perPage:"10",
+    });
+    gitment.render('comments');
+</script>
+
+    </div>
 
 
 
@@ -251,7 +325,7 @@
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link current" href="/categories/深度学习/"><i class="fa" aria-hidden="true">深度学习</i></a><span class="category-list-count">3</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link current" href="/categories/深度学习/"><i class="fa" aria-hidden="true">深度学习</i></a><span class="category-list-count">4</span></li></ul>
     </div>
 
 
@@ -259,7 +333,7 @@
         
     <div class="widget">
       <h3 class="title">归档</h3>
-        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">3</span></li></ul>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">4</span></li></ul>
     </div>
 
 
@@ -268,7 +342,7 @@
   <div class="widget">
     <h3 class="title">标签云</h3>
     <div class="content tag-cloud">
-        <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/caffe/" style="font-size: 10px;">caffe</a> <a href="/tags/caffe-matlab/" style="font-size: 10px;">caffe matlab</a>
+        <a href="/tags/caffe/" style="font-size: 10px;">caffe</a> <a href="/tags/caffe-matlab/" style="font-size: 10px;">caffe matlab</a> <a href="/tags/cs231n/" style="font-size: 20px;">cs231n</a>
     </div>
   </div>
 
