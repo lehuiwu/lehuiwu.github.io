@@ -200,37 +200,7 @@
 <p><div align="center"><img src="https://i.imgur.com/Jnql7VE.png" alt=""><div align="left"></div></div></p>
 <p><div align="center"><img src="https://i.imgur.com/jAHbSGn.png" alt=""><div align="left"><br><strong>E.g. Suppose that we found a W such that L = 0. Is this W unique ?</strong><br>&emsp;&emsp;答案：No! 2W is also has L=0!，特别是因为我们谈了一点点，关于把整个问题扩大或缩小的事情，取决于W，你可以拿W乘以二，这个两倍的W，也将实现零损失。如果你拿W 我们加倍W，正确与不正确的安全边际值，也会翻倍，所以如果所有这些安全边际，都大于1，结果我们就对其翻倍，其值也会大于1，结果损失函数值依然为0。<br>&emsp;&emsp;例子如下图所示：  </div></div></p>
 <p><div align="center"><img src="https://i.imgur.com/MzPcTxB.png" alt=""><div align="left"></div></div></p>
-<h2 id="正则项惩罚"><a href="#正则项惩罚" class="headerlink" title="正则项惩罚"></a>正则项惩罚</h2><p><div align="center"><img src="https://i.imgur.com/6efsk2c.png" alt=""><div align="left"></div></div></p>
-<p><div align="center"><img src="https://i.imgur.com/4wdAGJ5.png" alt=""><div align="left"><br><strong>E.g.分类器是如何从这些都是0值得损失函数之间，做出选择呢？</strong><br>&emsp;&emsp;那是因为我们在这里所做的，只是在数据方面的损失，我们仅仅是告诉分类器，他需要尝试找到，可以拟合训练集的W，但是实际上，我们并不关心这很多关于拟合训练数据，机器学习的重点是我们使用训练数据来找到一些分类器，然后我们将这个东西应用于测试数据，所以我们并不关心训练集的表现，我们真正关心的是这个分类器的测试数据的效果，所以如果我们只需要告诉分类器，拟合训练集的话，就可能导致我们陷入尴尬的境地，你会发现，分类器可能会行为反常，所以这是一个典型的例子。  </div></div></p>
-<p><div align="center"><img src="https://i.imgur.com/fwAO4xE.png" alt=""><div align="left"><br><strong>假设我们有这样的数据，就是图中的蓝点，并且我们将会为训练数据拟合一些曲线，那么如果我们告诉分类器做的惟一的事情，是尝试和适合的训练数据，它可能会进入并具有非常曲折的曲线，并尝试完美分类所有的训练数据点，但这很糟糕，因为我们实际上并不关心这个表现，我们关心测试数据的性能，所以现在如果我们有新的数据进来，这种趋势也是如此，那么这个蓝色的虚线将是完全错误的，事实上，我们可能会喜欢的是，分类器可能是预测的这条绿色的直线，而不是这个复杂的蓝色的曲线，完全适合所有的训练数据，这在机器学习里是一个非常核心的基础性问题，实际上我们解决它用正则化的概念。</strong>  </div></div></p>
-<p><div align="center"><img src="https://i.imgur.com/3N9KZan.png" alt=""><div align="left"></div></div></p>
-<p><div align="center"><img src="https://i.imgur.com/B01PzS5.png" alt=""><div align="left"><br>&emsp;&emsp;<strong>正则化项，鼓励模型以某种方式，选择更简单的W，这里的简单取决于任务的规模和模型的种类。这里实际上也体现了奥卡姆剃刀的理念，也是科学发现最基本的思想就是要让一个理论的应用更广泛，也就是说，如果你有许多个可以解释你观察结果的假设，一般来讲你应该选择最简约的，因为这样在未来可将其用于解释新的观察结果，我们运用这种直觉的方式，基于这一思想并运用于机器学习中，我们会直接假设正则化惩罚项，这通常记为R。</strong></div></div></p>
-<p><div align="center"><img src="https://i.imgur.com/TqVGoos.png" alt=""><div align="left"><br><strong>Q8: λ，R，W三项之间有什么相互作用？</strong><br>&emsp;&emsp;答案：实际上这主要是为了让这个弯弯的曲线成为一条值值的绿线，你可以想像，也许你正在做一个回归问题，根据不同的多项式基函数，如果你加入这个回归惩罚项，也许模型确实非常逼近高幂次多项式函数，但是通过加入这个回归项，如果和数据拟合的很好，或者相对好，你就可以让模型的幂次数降低，所以你可以想像有两种方法可以做到这一点，一种是限制你的模型，这个模型在于不要更高的阶数或模型太过复杂，另一种就是，加入这个软性惩罚项，这样一来，模型依然可以逼近复杂模型的效果，比如像这个例子中的高幂次多项式，如果你想使用这些更复杂的模型，你需要克服这个惩罚，使用它们的复杂性，这就是这个关系，不太线性的分类。  </div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
-<p><div align="center"><div align="left"></div></div></p>
+<p><strong>内容到此，大家加油</strong></p>
 
     </div>
 
@@ -247,6 +217,11 @@
 </article>
 
 <div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/04/25/正则项cs231nmd/" class="pre-post btn btn-default" title='cs231n正则化（Regularization）'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">cs231n正则化（Regularization）</span>
+        </a>
     
     
         <a href="/2018/04/25/图像分类笔记cs231n2/" class="next-post btn btn-default" title='图像分类 *线性分类I*'>
@@ -363,7 +338,7 @@
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link current" href="/categories/深度学习/"><i class="fa" aria-hidden="true">深度学习</i></a><span class="category-list-count">5</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link current" href="/categories/深度学习/"><i class="fa" aria-hidden="true">深度学习</i></a><span class="category-list-count">6</span></li></ul>
     </div>
 
 
@@ -371,7 +346,7 @@
         
     <div class="widget">
       <h3 class="title">归档</h3>
-        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">5</span></li></ul>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">6</span></li></ul>
     </div>
 
 
