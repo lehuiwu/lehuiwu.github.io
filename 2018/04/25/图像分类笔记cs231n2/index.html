@@ -179,15 +179,20 @@
         <p><strong>本内容为学习斯坦福课程CS231n 2017的课后笔记记录</strong><br><a id="more"></a><br><strong>斯坦福cs231n课程笔记 <em>线性分类器</em></strong><br><strong>线性分类可以解释为：</strong><br>&emsp;&emsp;每个种类的学习模板，看左下角的图，对图里的每个像素以及10个分类离得每一项，矩阵W里都有一些对应的项，告诉我们那个像素对那个分类有多少的影响，也就是说矩阵W里的每一行，都对应一个分类模板，如果我们解开这些行的值（成图片的大小），那么每一行又分别对应一些权重，每个图像像素值和对应的那个类别的一些权重，将这行分解回图像的大小，我们就可以可视化学到每个类的模板。<br>&emsp;&emsp;对于线性分类器的另一种解释是：学习像素在高维空间的一个线性决策边界，其中高维空间就对应了图片能娶到的像素密度值。  </p>
 <p><div align="center"><img src="https://i.imgur.com/KghACsR.png" alt=""><div align="left"></div></div></p>
 <p><div align="center"><img src="https://i.imgur.com/I5BvkY2.png" alt=""><div align="left"></div></div></p>
-<p><div align="center"><img src="https://i.imgur.com/JojcF8t.png" alt=""><div align="left"></div></div></p>
-<p><div align="center"><img src="https://i.imgur.com/NFJOgEi.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/JojcF8t.png" alt=""><div align="left"><br>&emsp;&emsp;<strong>概述：</strong>我们将要实现一种更强大的方法来解决图像分类问题，该方法可以自然地延伸到神经网络和卷积神经网络上。这种方法主要有两部分组成：一个是评分函数（score function），它是原始图像数据到类别分值的映射。另一个是损失函数（loss function），它是用来量化预测分类标签的得分与真实标签之间一致性的。该方法可转化为一个最优化问题，在最优化过程中，将通过更新评分函数的参数来最小化损失函数值。  </div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/NFJOgEi.png" alt=""><div align="left"><br><strong>从图像到标签分值的参数化映射:</strong><br>&emsp;&emsp;该方法的第一部分就是定义一个评分函数，这个函数将图像的像素值映射为各个分类类别的得分，得分高低代表图像属于该类别的可能性高低。下面会利用一个具体例子来展示该方法。现在假设有一个包含很多图像的训练集x_i∈R^D，每个图像都有一个对应的分类标签y_i。这里i=1,2…N并且y_i∈1…K。这就是说，我们有N个图像样例，每个图像的维度是D，共有K种不同的分类。<br>&emsp;&emsp;举例来说，在CIFAR-10中，我们有一个N=50000的训练集，每个图像有D=32x32x3=3072个像素，而K=10，这是因为图片被分为10个不同的类别（狗，猫，汽车等）。我们现在定义评分函数为：f:R^D →R^K，该函数是原始图像像素到分类分值的映射。</div></div></p>
 <p><div align="center"><img src="https://i.imgur.com/F3oN8BT.png" alt=""><div align="left"></div></div></p>
 <p><div align="center"><img src="https://i.imgur.com/xjUr9ID.png" alt=""><div align="left"></div></div></p>
 <p><div align="center"><img src="https://i.imgur.com/7H0ZrQq.png" alt=""><div align="left"></div></div></p>
-<p><div align="center"><img src="https://i.imgur.com/spaxT0a.png" alt=""><div align="left"></div></div></p>
-<p><div align="center"><img src="https://i.imgur.com/Rhjew7X.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/spaxT0a.png" alt=""><div align="left"><br><strong>线性分类器：</strong>在本模型中，我们从最简单的概率函数开始，一个线性映射：</div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/irt1GOF.png" alt=""><div align="left"><br>&emsp;&emsp;在上面的公式中，假设每个图像数据都被拉长为一个长度为D的列向量，大小为[D x 1]。其中大小为[K x D]的矩阵W和大小为[K x 1]列向量b为该函数的参数（parameters）。还是以CIFAR-10为例，Xi就包含了第i个图像的所有像素信息，这些信息被拉成为一个[3072 x 1]的列向量，W大小为[10x3072]，b的大小为[10x1]。因此，3072个数字（原始像素数值）输入函数，函数输出10个数字（不同分类得到的分值）。参数W被称为权重（weights）。b被称为偏差向量（bias vector），这是因为它影响输出数值，但是并不和原始数据x_i产生关联。在实际情况中，人们常常混用权重和参数这两个术语。<br><strong>需要注意的几点：</strong><br>&emsp;&emsp;首先，一个单独的矩阵乘法Wxi就高效地并行评估10个不同的分类器（每个分类器针对一个分类），其中每个类的分类器就是W的一个行向量。<br>注意我们认为输入数据(xi,yi)是给定且不可改变的，但参数W和b是可控制改变的。我们的目标就是通过设置这些参数，使得计算出来的分类分值情况和训练集中图像数据的真实类别标签相符。在接下来的课程中，我们将详细介绍如何做到这一点，但是目前只需要直观地让正确分类的分值比错误分类的分值高即可。<br>该方法的一个优势是训练数据是用来学习到参数W和b的，一旦训练完成，训练数据就可以丢弃，留下学习到的参数即可。这是因为一个测试图像可以简单地输入函数，并基于计算出的分类分值来进行分类。<br>&emsp;&emsp;最后，注意只需要做一个矩阵乘法和一个矩阵加法就能对一个测试数据分类，这比k-NN中将测试图像和所有训练数据做比较的方法快多了。</div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/Rhjew7X.png" alt=""><div align="left"><br><strong>理解线性分类器</strong><br>&emsp;&emsp;线性分类器计算图像中3个颜色通道中所有像素的值与权重的矩阵乘，从而得到分类分值。根据我们对权重设置的值，对于图像中的某些位置的某些颜色，函数表现出喜好或者厌恶（根据每个权重的符号而定）。举个例子，可以想象“船”分类就是被大量的蓝色所包围（对应的就是水）。那么“船”分类器在蓝色通道上的权重就有很多的正权重（它们的出现提高了“船”分类的分值），而在绿色和红色通道上的权重为负的就比较多（它们的出现降低了“船”分类的分值）。<br>&emsp;&emsp;一个将图像映射到分类分值的例子。为了便于可视化，假设图像只有4个像素（都是黑白像素，这里不考虑RGB通道），有3个分类（红色代表猫，绿色代表狗，蓝色代表船，注意，这里的红、绿和蓝3种颜色仅代表分类，和RGB通道没有关系）。首先将图像像素拉伸为一个列向量，与W进行矩阵乘，然后得到各个分类的分值。需要注意的是，这个W一点也不好：猫分类的分值非常低。从上图来看，算法倒是觉得这个图像是一只狗。</div></div></p>
 <p><div align="center"><img src="https://i.imgur.com/LCE2YVf.png" alt=""><div align="left"></div></div></p>
-<p><div align="center"><img src="https://i.imgur.com/FaqadLn.png" alt=""><div align="left"></div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/FaqadLn.png" alt=""><div align="left"><br><strong>偏差和权重的合并技巧：</strong>在进一步学习前，要提一下这个经常使用的技巧。它能够将我们常用的参数W和b合二为一。回忆一下，分类评分函数定义为：  </div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/1YU0uYl.png" alt=""><div align="left"><br>分开处理这两个参数（权重参数W和偏差参数b）有点笨拙，一般常用的方法是把两个参数放到同一个矩阵中，同时Xi向量就要增加一个维度，这个维度的数值是常量1，这就是默认的偏差维度。这样新的公式就简化成下面这样：    </div></div></p>
+<p><div align="center"><img src="https://i.imgur.com/ahw24cF.png" alt=""><div align="left"></div></div></p>
+<p>还是以CIFAR-10为例，那么x_i的大小就变成[3073x1]，而不是[3072x1]了，多出了包含常量1的1个维度）。W大小就是[10x3073]了。W中多出来的这一列对应的就是偏差值b，具体见下图：  </p>
+<p><div align="center"><img src="https://i.imgur.com/tcmDXMg.jpg" alt=""><div align="left"><br>偏差技巧的示意图。左边是先做矩阵乘法然后做加法，右边是将所有输入向量的维度增加1个含常量1的维度，并且在权重矩阵中增加一个偏差列，最后做一个矩阵乘法即可。左右是等价的。通过右边这样做，我们就只需要学习一个权重矩阵，而不用去学习两个分别装着权重和偏差的矩阵了。</div></div></p>
 <p><div align="center"><img src="https://i.imgur.com/KSeRcLH.png" alt=""><div align="left"></div></div></p>
 <p><div align="center"><img src="https://i.imgur.com/QwMPsp4.png" alt=""><div align="left"></div></div></p>
 <p><div align="center"><img src="https://i.imgur.com/6pu1rpx.png" alt=""><div align="left"></div></div></p>
@@ -209,9 +214,9 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2018/04/25/损失函数cs231n/" class="pre-post btn btn-default" title='损失函数'>
+        <a href="/2018/04/25/损失函数cs231n/" class="pre-post btn btn-default" title='cs231n损失函数和优化'>
             <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">损失函数</span>
+            <span class="hidden-xs">cs231n损失函数和优化</span>
         </a>
     
     
